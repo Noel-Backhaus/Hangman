@@ -17,6 +17,7 @@ buchstabenliste = ""
 galgenindex = 0
 galgenkontrolle = False
 galgenstand = ""
+spielen = True
 
 # Unterprogramme
 
@@ -29,7 +30,8 @@ def spracheauswaehlen():
 
     # Plausibilitätskontrolle
     sprache = sprache.lower()
-    while sprache != "english" and sprache != "englisch" and sprache != "german" and sprache != "deutsch":
+    optionen = ["english", "englisch", "german", "deutsch", "de", "en"]
+    while not sprache in optionen:
         print("")
         sprache = input("Ungültige Eingabe. Bitte geben Sie Englisch oder Deutsch ein: ")
         sprache = sprache.lower()
@@ -227,7 +229,7 @@ def entschluesseln():
 
 def galgen():
     global galgenstand
-    fertigergalgen = ["Hügel", "Längsbalken", "Querbalken", "Stützbalken", "Strick", "Kopf", "Oberkörper", "linker Arm", "rechter Arm", "linkes Bein", "rechtes Bein", "linkes Auge", "rechtes Auge", "Nase", "Mund"]
+    fertigergalgen = ["Hügel", "Längsbalken", "Querbalken", "Stützbalken", "Strick", "Kopf", "Oberkörper", "linker Arm", "rechter Arm", "linkes Bein", "rechtes Bein"]
     unfertigergalgen = []
 
     # Kontrolle zur Ausführung der Funktion
@@ -257,26 +259,81 @@ def rueckmelden():
     print("")
     print("Galgen:", galgenstand)
     print("")
+
+def wiederholen():
+    global spielen
+
+    # Eingabe
+    abfrage = input("Wollen Sie nochmal spielen? ")
+    abfrage = abfrage.lower()
     
+    # Plausibilitätskontrolle
+    while abfrage != "ja" and abfrage != "nein":
+        print("")
+        abfrage = input("Ungültige Eingabe. Bitte geben Sie ja oder nein ein: ")
+
+    # Festlegung
+    if abfrage == "ja":
+        spielen = True
+        leeren(100)
+        zuruecksetzen()
+    elif abfrage == "nein":
+        spielen = False
+
+def zuruecksetzen():
+    global sprache
+    global modus
+    global wort
+    global eingabe
+    global ratebuchstabe
+    global kleinbuchstabe
+    global grossbuchstabe
+    global ratewort
+    global geheimwort
+    global buchstabenliste
+    global galgenindex
+    global galgenkontrolle
+    global galgenstand
+    global spielen
+
+    sprache = ""
+    modus = ""
+    wort = ""
+    eingabe = ""
+    ratebuchstabe = ""
+    kleinbuchstabe = " "
+    grossbuchstabe = " "
+    ratewort = ""
+    geheimwort = ""
+    buchstabenliste = ""
+    galgenindex = 0
+    galgenkontrolle = False
+    galgenstand = ""
+    spielen = True
+
+def leeren(laenge):
+    for i in range(laenge):
+        print("")
+        
 # Hauptprogramm
 
 # Vorbereitung
-spracheauswaehlen()
-modusauswaehlen()
-wortauswaehlen()
-worteingeben()
-verschluesseln()
-for i in range(200):
-    print("")
-print("Los geht's!")
-rueckmelden()
-# Spielstart
-while ratewort != wort and geheimwort != wort and galgenstand != "fertig":
-    raten()
-    for i in range(100):
-        print("")
-    buchstabeauswerten()
-    entschluesseln()
-    wortauswerten()
-    galgen()
+while spielen == True:
+    spracheauswaehlen()
+    modusauswaehlen()
+    wortauswaehlen()
+    worteingeben()
+    verschluesseln()
+    leeren(200)
+    print("Los geht's!")
     rueckmelden()
+    # Spielstart
+    while ratewort != wort and geheimwort != wort and galgenstand != "fertig":
+        raten()
+        leeren(100)
+        buchstabeauswerten()
+        entschluesseln()
+        wortauswerten()
+        galgen()
+        rueckmelden()
+    wiederholen()
