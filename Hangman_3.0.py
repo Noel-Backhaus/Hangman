@@ -22,7 +22,8 @@ galgenindex = 0
 galgenkontrolle = False
 galgenstand = ""
 spielen = True
-spielende = False
+gewonnen = False
+verloren = False
 
 # Farben
 
@@ -202,7 +203,7 @@ def wortauswerten():
     global geheimwort
     global galgenindex
     global galgenkontrolle
-    global spielende
+    global gewonnen
 
     # Kontrolle zur Ausführung der Funktion
     if ratewort == eingabe:
@@ -212,7 +213,7 @@ def wortauswerten():
             print(Farben.GRUEN + "Das Wort", ratewort, "ist richtig! Sie haben gewonnen!" + Farben.ENDE)
             geheimwort = wort
             galgenkontrolle = False
-            spielende = True
+            gewonnen = True
         else:
             print("")
             print(Farben.ROT + "Das Wort", ratewort, "ist falsch. Das können Sie besser!" + Farben.ENDE)
@@ -221,7 +222,7 @@ def wortauswerten():
 
 def entschluesseln():
     global geheimwort
-    global spielende
+    global gewonnen
     hilfswort = ""
 
     # Kontrolle zur Ausführung der Funktion
@@ -242,26 +243,22 @@ def entschluesseln():
     if geheimwort == wort:
         print("")
         print("Sie haben's geschafft! Sie haben alle Buchstaben erraten!")
-        spielende = True
+        gewonnen = True
 
 def galgen():
     global galgenstand
     global figuren
     global fertigergalgen
-    global spielende
+    global verloren
 
     # Kontrolle zur Ausführung der Funktion
     if galgenkontrolle == True:
-        # Speicherung des Galgens
-        #for i in range(galgenindex):
-        #    unfertigergalgen.append(fertigergalgen[i])
-        #galgenstand = unfertigergalgen[i]
         galgenstand = fertigergalgen[galgenindex]
         if galgenindex == 7:
-            spielende = True
+            verloren = True
 
     # Kontrolle des Spielendes
-    if spielende == True:
+    if verloren == True:
         print("")
         print("Der Galgen ist fertig. Sie haben verloren... ")
         print("")
@@ -270,9 +267,10 @@ def galgen():
 def rueckmelden():
     global buchstabenliste
     global fertigergalgen
-    global spielende
+    global gewonnen
+    global verloren
 
-    if spielende == True:
+    if gewonnen == True or verloren == True:
         print("")
         print("Das ist Ihr finaler Stand: ")
     else:
@@ -322,7 +320,8 @@ def zuruecksetzen():
     global galgenkontrolle
     global galgenstand
     global spielen
-    global spielende 
+    global gewonnen
+    global verloren
 
     sprache = ""
     modus = ""
@@ -339,7 +338,8 @@ def zuruecksetzen():
     galgenkontrolle = False
     galgenstand = ""
     spielen = True
-    spielende = False
+    gewonnen = False
+    verloren = False
 
 def leeren(laenge):
     for i in range(laenge):
@@ -358,7 +358,7 @@ while spielen == True:
     print("Los geht's!")
     rueckmelden()
     # Spielstart
-    while spielende != True:
+    while gewonnen == False and verloren == False:
         raten()
         leeren(100)
         buchstabeauswerten()
@@ -368,3 +368,4 @@ while spielen == True:
         rueckmelden()
     wiederholen()
     
+
