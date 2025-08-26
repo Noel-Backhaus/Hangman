@@ -10,6 +10,6 @@ Wenn Sie das Programm ausführen wollen, können Sie z.B. das Programm Thonny da
 
 <h3>Quellen:</h3>
 
-- deutsch Wortliste: https://github.com/davidak/wortliste
+- deutsche Wortliste: https://github.com/davidak/wortliste
 - englische Wortliste: https://github.com/kkrypt0nn/wordlists/blob/main/wordlists/languages/english.txt
 - Thonny: https://thonny.org/
